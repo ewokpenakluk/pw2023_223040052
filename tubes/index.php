@@ -34,6 +34,9 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Keranjang</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" href="../tubes/adminpanel/login.php">LOGIN</a>
+              </li>
             </ul>
           </div>
         </div>
@@ -224,13 +227,13 @@
               <span>Copyright @2023 |  Created and Developed by<a href="https://www.instagram.com/angganfss" class="text-decoration-none text-dark fw-bold"> Angga NS</a></span>
             </div>
             <div class="col-md-6 text-end">
-              <a href="" class="text-decoration-none">
+              <a href="https://www.facebook.com/Deon Nugraha" class="text-decoration-none">
                 <img src="./img/facebook.png" class= "ms-2"width="30">
               </a>
-              <a href="" class="text-decoration-none">
+              <a href="https://www.instagram.com/angganfss" class="text-decoration-none">
                 <img src="./img/instagram.png" class= "ms-2"width="30">
               </a>
-              <a href="" class="text-decoration-none">
+              <a href="https://www.twitter.com/Ewok azza" class="text-decoration-none">
                 <img src="./img/twitter.png"class= "ms-2 "width="30">
               </a>
             </div>
@@ -238,7 +241,7 @@
         </di>
       </footer>
       <!-- akhir fotter -->
-
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
       <!-- css -->
       <style>
         body{
@@ -248,7 +251,7 @@
           color: #3b3f46;
         }
         .form-control{
-          width: 350px;
+          width: 250px;
         }
         .img-kategori{
           width: 50px;
