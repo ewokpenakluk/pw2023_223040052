@@ -1,3 +1,12 @@
+<?php 
+require 'koneksi.php';
+$nama = htmlspecialchars($_GET['nama']);
+$queryProduk = mysqli_query($conn, "SELECT * FROM produk WHERE nama='$nama'");
+$produk = mysqli_fetch_array($queryProduk);
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -54,24 +63,15 @@
         <div class="row row-produk">
             <div class="col-lg-5">
             <figure class="figure">
-             <img src="./img/Baju6.jpg" class="figure-img img-fluid rounded" style="border-radius: 5px;" width="450px">
-              <figcaption class="figure-caption">
-                <a href="borntodie.php">
-                <img src="./img/Baju2.jpg" class="figure-img img-fluid rounded" style="border-radius: 5px;" width="70px">
-                </a>
-                <a href="bbqride.php">
-                <img src="./img/Baju3.jpg" class="figure-img img-fluid rounded" style="border-radius: 5px;" width="70px">
-                </a>
-              </figcaption>
+             <img src="img/<?= $produk["foto"] ?>" class="figure-img img-fluid rounded" style="border-radius: 5px;" width="450px">
             </figure>
             </div>
             <div class="col-lg-7">
-                <h2>PHILIP WORKS</h2>
+                <h2><?= $produk["nama"] ?></h2>
                 <div class="garis-produk">
                 </div>
-                <h3>Born to Ride</h3>
-                <h4>Jaket sunmory/Riding Semi protecktor</h4>
-                <h2>Rp 350.000</h2>
+                <h4><?= $produk["detail"] ?></h4>
+                <h2><?= $produk["harga"] ?></h2>
                 <div class="btn-produk mt-4">
                     <a href="#" class="btn-dark btn-lg" style="font-size: 14px;">Masukan Keranjang</a>
                     <a href="#" class="btn-light btn-lg"style="font-size: 14px;">Beli Sekarang</a>

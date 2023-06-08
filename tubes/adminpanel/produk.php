@@ -1,78 +1,99 @@
 <?php
- require "session.php";
+session_start();
  require "../koneksi.php"; 
+
+ // Cek peran pengguna
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    // Pengguna bukan admin, tampilkan pesan atau arahkan ke halaman lain yang sesuai
+    echo "Anda tidak memiliki akses ke halaman ini.";
+    exit;
+}
 
  if (isset($_POST['submit'])) {
     $kategori_id = $_POST['kategori_id'];
     $nama = htmlspecialchars($_POST['nama']);
     $harga = htmlspecialchars($_POST['harga']);
     $detail = htmlspecialchars($_POST['detail']);
-    $ketersediaan_stock = htmlspecialchars($_POST['ketersediaan_stock']); }
+    $ketersediaan_stock = htmlspecialchars($_POST['ketersediaan_stock']); 
+
+    $foto = upload();
+    if (!$foto) {
+        return false;
+    }
+
+
+    //   queri 
+        $query = "INSERT INTO produk (kategori_id, nama, harga, foto, detail, ketersediaan_stock) 
+        VALUES ('$kategori_id', '$nama', '$harga', '$foto', '$detail', '$ketersediaan_stock')";
+
+        //   jalanin
+        if (mysqli_query($conn, $query)) {
+        echo "Data berhasil ditambahkan";
+        } else {
+        echo "Error: " . mysqli_error($conn);
+        }
+    }
 
     // Cek apakah input file 'foto' ada
-    if (!empty($_FILES['foto']['name'])) {
-        $namafile = $_FILES['foto']['name'];
-        $ukuranfile = $_FILES['foto']['size'];
-        $error = $_FILES['foto']['error'];
+    function upload() {
+        // ambil nama file foto
+        $namaFile = $_FILES['foto']['name'];
+        $ukuranFile = $_FILES['foto']['size'];
+        $eror = $_FILES['foto']['error'];
         $tmpName = $_FILES['foto']['tmp_name'];
-
-        // Cek apakah yang diupload adalah foto
-        $ekstensifotoValid = ['jpg', 'jpeg', 'png'];
-        $ekstensifoto = explode('.', $namafile);
-        $ekstensifoto = strtolower(end($ekstensifoto));
-        if (!in_array($ekstensifoto, $ekstensifotoValid)) {
-            echo "Yang Anda upload bukan foto";
-            return;
+    
+        // cek apakah tidak ada foto yang diupload
+        if ($eror == 4) {
+            echo "<script>
+                    alert('foto tidak ditemukan!');
+                    </script>";
+            return false;
         }
-
-        // Cek jika ukurannya terlalu besar
-        if ($ukuranfile > 1000000) {
-            echo "Ukuran foto terlalu besar";
-            return;
+    
+        // cek apakah yang diupload adalah foto
+        $ekstensiFotoValid = ['jpg', 'jpeg', 'png'];
+        $ekstensiFoto = explode('.', $namaFile);
+        $ekstensiFoto = strtolower(end($ekstensiFoto));
+        if (!in_array($ekstensiFoto, $ekstensiFotoValid)) {
+            echo "<script>
+                    alert('Ekstensi foto tidak sesuai!');
+                    </script>";
         }
+    
+        // cek jika ukurannya terlalu besar 
+        if ($ukuranFile > 2000000) {
+            echo "<script>
+                alert('Ukuran foto terlalu besar!');
+                </script>";
+            return false;
+        }
+    
+        // generate nama foto baru
+        $namaFileBaru = uniqid();
+        $namaFileBaru .= '.';
+        $namaFileBaru .= $ekstensiFoto;
+    
+        // lolos pengecekan, foto siap diupload
+        move_uploaded_file($tmpName, '../img/' . $namaFileBaru);
+    
+        return $namaFileBaru;
+}
 
-        // Lolos pengecekan, foto siap diupload
-        // Generate nama foto baru
-        $namafilebaru = uniqid() . '.' . $ekstensifoto;
-
-        // Lakukan upload file
-        move_uploaded_file($tmpName, '../img' . $namafilebaru);
-
- 
-//   queri 
-$query = "INSERT INTO produk (kategori_id, nama, harga, foto, detail, ketersediaan_stock) 
-              VALUES ('$kategori_id', '$nama', '$harga', '$namafilebaru', '$detail', '$ketersediaan_stock')";
-
-            //   jalanin
-            if (mysqli_query($con, $query)) {
-                echo "Data berhasil ditambahkan";
-            } else {
-                echo "Error: " . mysqli_error($con);
-            }
-       
-
-return $namafilebaru;
-    echo $target_dir. "<br>";
-    echo $nama_file. "<br>";
-    echo  $target_file. "<br>";
-    echo  $imageFileType. "<br>";
-    echo $image_size. "<br>";
+// return $namafilebaru;
+//     echo $target_dir. "<br>";
+//     echo $nama_file. "<br>";
+//     echo  $target_file. "<br>";
+//     echo  $imageFileType. "<br>";
+//     echo $image_size. "<br>";
 
 
-    if ($nama == '' || $kategori_id == '' || $harga == '') {
-        ?>
-        <div class="alert alert-danger mt-3" role="alert">
-           Nama, Kategori, dan Harga wajib diisi!!
-        </div>
-        <?php
-    } else{
+//     if ($nama == '' || $kategori_id == '' || $harga == '') {
+//         
 
-    }
-  }
-
- $query = mysqli_query($con," SELECT * FROM produk");
+//     }
+ $query = mysqli_query($conn," SELECT * FROM produk");
  $jumlahproduk = mysqli_num_rows($query);
- $querykategori = mysqli_query($con,"SELECT * FROM kategori");
+ $querykategori = mysqli_query($conn,"SELECT * FROM kategori");
  ?>
 
 

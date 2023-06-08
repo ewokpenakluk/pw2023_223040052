@@ -1,3 +1,9 @@
+<?php 
+require 'koneksi.php';
+$produk = query("SELECT * FROM produk") ;
+
+?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -20,19 +26,19 @@
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarNav">
-          <form class="d-flex ms-auto" role="search">
-      <input class="form-control me-2" type="search" placeholder="Cari Barang Anda!" aria-label="Cari">
-      <button class="btn btn-warning" type="submit">Cari</button>
-    </form>
+          <form action="search.php" method="$_GET" class="d-flex ms-auto" id="searchForm">
+            <input class="form-control me-2" id="keyword" name="keyword" type="search" placeholder="Cari Barang Anda!" aria-label="Cari">
+            <button class="btn btn-warning" name="cari" id="tombol-cari" type="submit">Cari</button>
+          </form>
             <ul class="navbar-nav ms-auto">
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="#">Beranda</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Notifikasi</a>
+                <a class="nav-link" href="#">Kategori</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Keranjang</a>
+                <a class="nav-link" href="#">Produk</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="../tubes/adminpanel/login.php">LOGIN</a>
@@ -92,129 +98,28 @@
       <div class="container mt-5">
       <div class="judul-kategori" style="background-color: #f1ae08; padding: 5px 10px" >
           <h5 class="text-center" style="margin-top: 5px">Produk</h5>
-        <div class="row">
-          <div class="col-lg-2 col-md-2 col-sm-4 col-6 mt-2">
-          <div class="card text-center">
-            <img src="./img/Baju6.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-               <h5 class="card-title">JACKET</h5>
-               <p class="card-text">Rp 350.000</p>
-            <a href="017.php" class="btn btn-dark d-grid">Beli</a>
-          </div>
-         </div>
-       </div>
-       <div class="col-lg-2 col-md-2 col-sm-4 col-6 mt-2">
-          <div class="card text-center">
-            <img src="./img/Baju2.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-               <h5 class="card-title">JACKET</h5>
-               <p class="card-text">Rp 350.000</p>
-            <a href="borntodie.php" class="btn btn-dark d-grid">Beli</a>
-          </div>
-         </div>
-       </div>
-       <div class="col-lg-2 col-md-2 col-sm-4 col-6 mt-2">
-          <div class="card text-center">
-            <img src="./img/Baju3.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-               <h5 class="card-title">JACKET</h5>
-               <p class="card-text">Rp 350.000</p>
-            <a href="bbqride.php" class="btn btn-dark d-grid">Beli</a>
-          </div>
-         </div>
-       </div>
-       <div class="col-lg-2 col-md-2 col-sm-4 col-6 mt-2">
-          <div class="card text-center">
-            <img src="./img/Helm1.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-               <h5 class="card-title">HELM</h5>
-               <p class="card-text">Rp 27.500.000</p>
-            <a href="agv.php" class="btn btn-dark d-grid">Beli</a>
-          </div>
-         </div>
-       </div>
-       <div class="col-lg-2 col-md-2 col-sm-4 col-6 mt-2">
-          <div class="card text-center">
-            <img src="./img/Helm2.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-               <h5 class="card-title">HELM</h5>
-               <p class="card-text">Rp 10.000.000</p>
-            <a href="arai.php" class="btn btn-dark d-grid">Beli</a>
-          </div>
-         </div>
-       </div>
-       <div class="col-lg-2 col-md-2 col-sm-4 col-6 mt-2">
-          <div class="card text-center">
-            <img src="./img/Helm3.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-               <h5 class="card-title">HELM</h5>
-               <p class="card-text">RP 7.000.000</p>
-            <a href="hjc.php" class="btn btn-dark d-grid">Beli</a>
-          </div>
-         </div>
-       </div>
-       <div class="col-lg-2 col-md-2 col-sm-4 col-6 mt-2">
-          <div class="card text-center">
-            <img src="./img/Celana1.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-               <h5 class="card-title">PANTS</h5>
-               <p class="card-text">Rp 1.350.000</p>
-            <a href="celana.php" class="btn btn-dark d-grid">Beli</a>
-          </div>
-         </div>
-       </div>
-       <div class="col-lg-2 col-md-2 col-sm-4 col-6 mt-2">
-          <div class="card text-center">
-            <img src="./img/Kamera2.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-               <h5 class="card-title">CAMERA</h5>
-               <p class="card-text">Rp 600.000</p>
-            <a href="kamera.php" class="btn btn-dark d-grid">Beli</a>
-          </div>
-         </div>
-       </div>
-       <div class="col-lg-2 col-md-2 col-sm-4 col-6 mt-2">
-          <div class="card text-center">
-            <img src="./img/Gloves1.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-               <h5 class="card-title">GLOVES</h5>
-               <p class="card-text">Rp 7.300.000</p>
-            <a href="sarungtangan.php" class="btn btn-dark d-grid">Beli</a>
-          </div>
-         </div>
-       </div>
-       <div class="col-lg-2 col-md-2 col-sm-4 col-6 mt-2">
-          <div class="card text-center">
-            <img src="./img/Gloves2.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-               <h5 class="card-title">GLOVES</h5>
-               <p class="card-text">Rp 5.350.000</p>
-            <a href="sarungtangan2.php" class="btn btn-dark d-grid">Beli</a>
-          </div>
-         </div>
-       </div>
-       <div class="col-lg-2 col-md-2 col-sm-4 col-6 mt-2">
-          <div class="card text-center">
-            <img src="./img/Sepatu2.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-               <h5 class="card-title">SHOES</h5>
-               <p class="card-text">Rp 8.350.000</p>
-            <a href="sepatu.html" class="btn btn-dark d-grid">Beli</a>
-          </div>
-         </div>
-       </div>
-       <div class="col-lg-2 col-md-2 col-sm-4 col-6 mt-2">
-          <div class="card text-center">
-            <img src="./img/Sepatu3.jpg" class="card-img-top" alt="...">
-              <div class="card-body">
-               <h5 class="card-title">SHOES</h5>
-               <p class="card-text">Rp 4.350.000</p>
-            <a href="sepatu2.php" class="btn btn-dark d-grid">Beli</a>
-          </div>
-         </div>
-       </div>
-      </div>  
+          <div class="row justify-content-center">
+                <?php $i = 0; ?>
+                <?php foreach ($produk as $p) : ?>
+                    <?php if ($i % 3 == 0 && $i != 0) : ?>
+                        </div>
+                        <div class="row">
+                    <?php endif; ?>
+                    <div class="col-lg-2 col-md-2 col-sm-4 col-6 mt-2 d-flex mx-auto" style="width: 30%;">
+                        <div class="card text-center">
+                            <img src="img/<?= $p["foto"]; ?>" class="card-img-top" alt="...">
+                            <div class="card-body">
+                                <h5 class="card-title"><?= $p["nama"]; ?></h5>
+                                <p class="card-text"><?= $p["harga"]; ?></p>
+                                <a href="017.php?nama=<?= $p["nama"] ?>" class="btn btn-dark d-grid">Beli</a>
+                            </div>
+                        </div>
+                    </div>
+                    <?php $i++; ?>
+                <?php endforeach; ?>
+            </div>
     </div>
+  </div>
       <!-- akhir produk -->
       <!-- footer -->
       <footer class="bg-warning p-5 mt-5">
@@ -241,6 +146,7 @@
         </di>
       </footer>
       <!-- akhir fotter -->
+      <script src="js/script.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js"></script>
       <!-- css -->
       <style>

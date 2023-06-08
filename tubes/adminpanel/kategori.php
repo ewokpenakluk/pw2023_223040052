@@ -1,8 +1,19 @@
 <?php
- require "session.php";
+ session_start();
  require "../koneksi.php"; 
+ if (!isset($_SESSION["submit"])) {
+    header("Location: login.php");
+    exit;
+}
 
- $querykategori = mysqli_query($con,"SELECT * FROM kategori");
+// Cek peran pengguna
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    // Pengguna bukan admin, tampilkan pesan atau arahkan ke halaman lain yang sesuai
+    echo "Anda tidak memiliki akses ke halaman ini.";
+    exit;
+}
+
+ $querykategori = mysqli_query($conn,"SELECT * FROM kategori");
  $jumlahkategori = mysqli_num_rows($querykategori);
 ?>
 
@@ -54,7 +65,7 @@
     <?php 
     if(isset($_POST['simpan_kategori'])){
         $kategori = htmlspecialchars($_POST['kategori']);
-        $queryExist = mysqli_query($con,"SELECT nama FROM kategori WHERE nama='$kategori'");
+        $queryExist = mysqli_query($conn,"SELECT nama FROM kategori WHERE nama='$kategori'");
         $jumlahdatakategoribaru = mysqli_num_rows($queryExist);
         if($jumlahdatakategoribaru > 0){
             ?>
@@ -64,7 +75,7 @@
             <?php
         }
         else{
-            $querysimpan = mysqli_query($con, "INSERT INTO kategori (nama) VALUES('$kategori')");
+            $querysimpan = mysqli_query($conn, "INSERT INTO kategori (nama) VALUES('$kategori')");
             
             if($querysimpan){
                 ?>
@@ -76,7 +87,7 @@
 
             }
             else{
-                echo mysqli_error($con);
+                echo mysqli_error($conn);
             }
 
         }

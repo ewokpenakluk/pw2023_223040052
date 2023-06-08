@@ -1,8 +1,7 @@
 <?php
- require "session.php";
  require "../koneksi.php"; 
  $id =$_GET['p'];
- $query = mysqli_query($con,"SELECT * FROM kategori WHERE id='$id'");
+ $query = mysqli_query($conn,"SELECT * FROM kategori WHERE id='$id'");
  $data = mysqli_fetch_array($query);
 
 
@@ -17,7 +16,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-    <?php require"navbar.php"; ?>
+    <?php require "navbar.php"; ?>
     <div class="container mt-5">
     <h2>Detail Kategori</h2>
 
@@ -43,7 +42,7 @@
             <?php
         }
         else{
-            $query = mysqli_query($con,"SELECT * FROM kategori WHERE nama='$kategori'");
+            $query = mysqli_query($conn,"SELECT * FROM kategori WHERE nama='$kategori'");
             $jumlahdata = mysqli_num_rows($query);
 
             if($jumlahdata > 0){
@@ -54,7 +53,7 @@
                 <?php
             }
             else{
-                $querysimpan = mysqli_query($con,"UPDATE kategori SET nama='$kategori' WHERE id='$id'");
+                $querysimpan = mysqli_query($conn,"UPDATE kategori SET nama='$kategori' WHERE id='$id'");
                 if($querysimpan){
                     ?>
                  <div class="alert alert-warning mt-3" role="alert">
@@ -65,7 +64,7 @@
     
                 }
                 else{
-                    echo mysqli_error($con);
+                    echo mysqli_error($conn);
                 }
     
             }
@@ -73,7 +72,7 @@
      }
 
      if(isset($_POST['deleteBtn'])){
-        $querydelete = mysqli_query($con,"DELETE FROM kategori WHERE id='$id'");
+        $querydelete = mysqli_query($conn,"DELETE FROM kategori WHERE id='$id'");
         if($querydelete){
             ?>
             <div class="alert alert-warning mt-3" role="alert">
@@ -84,7 +83,7 @@
             <?php
         }
         else{
-            echo mysqli_error($con);
+            echo mysqli_error($conn);
         }
      }
     ?>

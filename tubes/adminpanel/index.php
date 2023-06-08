@@ -1,10 +1,18 @@
 <?php
- require "session.php";
+session_start();
  require "../koneksi.php";
 
-   $querykategori = mysqli_query($con,"SELECT * FROM kategori");
+
+ // Cek peran pengguna
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    // Pengguna bukan admin, tampilkan pesan atau arahkan ke halaman lain yang sesuai
+    echo "Anda tidak memiliki akses ke halaman ini.";
+    exit;
+}
+
+   $querykategori = mysqli_query($conn,"SELECT * FROM kategori");
    $jumlahkategori = mysqli_num_rows($querykategori);
-   $queryproduk = mysqli_query($con,"SELECT * FROM produk");
+   $queryproduk = mysqli_query($conn,"SELECT * FROM produk");
    $jumlahproduk = mysqli_num_rows($queryproduk);
 ?>
 
@@ -15,7 +23,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
+    <title>adminpanel</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>

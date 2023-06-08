@@ -1,7 +1,46 @@
 <?php
 session_start();
  require"../koneksi.php";
+
+
+
+if (isset($_POST["submit"])) {
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    $result = mysqli_query($conn, "SELECT * FROM users WHERE username = '$username'");
+
+    // Cek username
+    if (mysqli_num_rows($result) === 1) {
+        // Cek password
+        $row = mysqli_fetch_assoc($result);
+        if (password_verify($password, $row["password"])) {
+            // Set session
+            $_SESSION["submit"] = true;
+            $_SESSION["username"] = $username;
+            $_SESSION["role"] = $row['role'];
+        
+
+           
+            // Redirect ke halaman sesuai peran
+            if ($row['role'] === 'admin') {
+                header("Location: ../adminpanel");
+                exit;
+            } else if ($row['role'] === 'user') {
+                header("Location: ../index.php");
+                exit;
+            } else {
+                echo "Anda tidak memiliki akses.";
+            }
+        } else {
+            $error = true;
+        }
+    } else {
+        $error = true;
+    }
+}
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,6 +68,10 @@ session_start();
     </style>
 <body>
 <div class="main d-flex flex-column justify-content-center align-items-center">
+    <form class="mb-3" action="" method="post">
+                        <?php if (isset($error)) : ?>
+                            <p style="color: red; font-style:italic;">Username atau Password salah</p>
+                        <?php endif; ?>
     <div class="login-box p-5 shadow">
         <form action="" method="post">
             <div>
@@ -41,45 +84,14 @@ session_start();
                 <input type="password" class="form-control" name="password"
                 id="password">
             </div>
+            <a href="./regisuser.php">Daftar</a>
             <div>
-                <input value="login" class="btn btn-warning form-control mt-3" type="submit" name="loginbtn">
+                <input value="login" class="btn btn-warning form-control mt-3" type="submit" name="submit">
             </div>
         </form>
     </div>
     <div class="mt-4" style="width: 500px">
-    <?php
-    if(isset($_POST['loginbtn'])){
-        $username = htmlspecialchars($_POST['username']);
-        $password = htmlspecialchars($_POST['password']);
-
-        $query = mysqli_query($con,"SELECT * FROM users WHERE username='$username'");
-        $countdata = mysqli_num_rows($query);
-        $data = mysqli_fetch_array($query);
-
-        if($countdata>0){
-            if (password_verify($password,$data['password'])) {
-                $_SESSION['username'] = $data['username'];
-                $_SESSION['login'] = true;
-                header('location: ../adminpanel');
-            }
-            else{ ?>
-                <div class="alert alert-warning" role="alert">
-                    Password Salah!!!
-                </div>
-                <?php
-
-            }
-        }
-        else{
-            ?>
-            <div class="alert alert-warning" role="alert">
-                Data yang anda masukan salah!
-            </div>
-            <?php
-        }
-
-    }
-    ?>
+    
 </div>
 </div>
 </body>
